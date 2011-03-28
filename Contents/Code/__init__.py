@@ -1,9 +1,5 @@
-from PMS import *
-from PMS.Objects import *
-from PMS.Shortcuts import *
-
 PLUGIN_PREFIX = "/photos/aperturePriority"
-RSS_FEED = "http://www.theingersolls.com/Will/index.php?x=rss"
+RSS_FEED = "http://www.aperturepriorityphoto.com/index.php?x=rss"
 
 ####################################################################################################
 
@@ -14,10 +10,10 @@ def Start():
 ####################################################################################################
 
 def MainMenu():
-  dir = MediaContainer(art="art-default.jpg", viewGroup="Pictures", title1="Aperture Priority")
+  dir = MediaContainer(art=R("art-default.jpg"), viewGroup="Pictures", title1="Aperture Priority")
 
   for item in RSS.FeedFromURL(RSS_FEED).entries:
-      node = XML.ElementFromString(item.description, True)
+      node = HTML.ElementFromString(item.description)
       summary = ' '.join(node.xpath("//text()")).replace('\n','').strip()
       thumb = node.xpath("//img")[0].get('src')
       img = thumb.replace('thumbnails/thumb_', 'images/')
